@@ -1,0 +1,60 @@
+from queue import PriorityQueue
+
+def a_star(graph, start, goal, heuristic):
+    pq = PriorityQueue()
+    pq.put((0, start))
+    g_cost = {node: float('inf') for node in graph}
+    g_cost[start] = 0
+    came_from = {}
+    
+    while not pq.empty():
+        current_cost, current = pq.get()
+
+        if current == goal:
+            path = []
+            while current in came_from:
+                path.append(current)
+                current = came_from[current]
+            path.append(start)
+            path.reverse()
+            return path, g_cost[goal]
+
+        for neighbor, cost in graph[current]:
+            temp_g = g_cost[current] + cost
+            if temp_g < g_cost[neighbor]:
+                g_cost[neighbor] = temp_g
+                f_cost = temp_g + heuristic[neighbor]
+                pq.put((f_cost, neighbor))
+                came_from[neighbor] = current
+    return None, float('inf')
+
+
+# 🔹 User Input
+graph = {}
+n = int(input("Enter number of nodes: "))
+
+for i in range(n):
+    node = input(f"Enter node {i+1}: ")
+    neighbors = input(f"Enter neighbors of {node} with cost (e.g., B:4 C:2): ").split()
+    graph[node] = []
+    for nb in neighbors:
+        if ":" in nb:
+            neigh, cost = nb.split(":")
+            graph[node].append((neigh, int(cost)))
+
+heuristic = {}
+print("\nEnter heuristic values:")
+for node in graph:
+    heuristic[node] = int(input(f"Heuristic for {node}: "))
+
+start = input("\nEnter start node: ")
+goal = input("Enter goal node: ")
+
+path, cost = a_star(graph, start, goal, heuristic)
+
+if path:
+    print("\nA* Algorithm Path:")
+    print(" -> ".join(path))
+    print(f"Total Cost: {cost}")
+else:
+    print("No path found.")
