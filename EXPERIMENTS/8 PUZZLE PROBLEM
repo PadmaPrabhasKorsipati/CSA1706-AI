@@ -1,83 +1,64 @@
-import heapq
+from collections import deque
 
-# Goal state
-goal_state = [[1, 2, 3], 
-              [4, 5, 6], 
-              [7, 8, 0]]  
+# Function to check if the state is the goal
+def is_goal(state, goal):
+    return state == goal
 
-# Find position of a value in the puzzle
-def find_position(puzzle, value):
-    for i in range(3):
-        for j in range(3):
-            if puzzle[i][j] == value:
-                return (i, j)
-
-# Heuristic: Manhattan Distance
-def manhattan_distance(state):
-    distance = 0
-    for i in range(3):
-        for j in range(3):
-            if state[i][j] != 0:
-                goal_x, goal_y = find_position(goal_state, state[i][j])
-                distance += abs(i - goal_x) + abs(j - goal_y)
-    return distance
-
-# Generate possible moves
+# Function to find the possible moves (neighbors)
 def get_neighbors(state):
     neighbors = []
-    x, y = find_position(state, 0)  # blank position
-    moves = [(0,1), (1,0), (0,-1), (-1,0)]  # right, down, left, up
-    
-    for dx, dy in moves:
-        new_x, new_y = x + dx, y + dy
-        if 0 <= new_x < 3 and 0 <= new_y < 3:
-            new_state = [row[:] for row in state]  # copy
-            new_state[x][y], new_state[new_x][new_y] = new_state[new_x][new_y], new_state[x][y]
+    idx = state.index(0)  # position of blank
+    row, col = divmod(idx, 3)
+
+    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Up, Down, Left, Right
+    for dr, dc in moves:
+        new_row, new_col = row + dr, col + dc
+        if 0 <= new_row < 3 and 0 <= new_col < 3:
+            new_idx = new_row * 3 + new_col
+            new_state = state[:]
+            # Swap blank with new position
+            new_state[idx], new_state[new_idx] = new_state[new_idx], new_state[idx]
             neighbors.append(new_state)
     return neighbors
 
-# Convert puzzle to tuple for hashing
-def puzzle_to_tuple(state):
-    return tuple(tuple(row) for row in state)
-
-# A* Search
-def solve_puzzle(start_state):
-    pq = []
-    heapq.heappush(pq, (0 + manhattan_distance(start_state), 0, start_state, []))
+# BFS algorithm
+def bfs(start, goal):
     visited = set()
+    queue = deque([(start, [])])  # (current_state, path)
 
-    while pq:
-        f, g, state, path = heapq.heappop(pq)
-        
-        if state == goal_state:
-            return path
-        
-        visited.add(puzzle_to_tuple(state))
-        
+    while queue:
+        state, path = queue.popleft()
+        if tuple(state) in visited:
+            continue
+        visited.add(tuple(state))
+
+        if is_goal(state, goal):
+            return path + [state]
+
         for neighbor in get_neighbors(state):
-            if puzzle_to_tuple(neighbor) not in visited:
-                heapq.heappush(pq, 
-                               (g + 1 + manhattan_distance(neighbor), g + 1, neighbor, path + [neighbor]))
+            queue.append((neighbor, path + [state]))
     return None
 
-# Main Program
-start_state = [[1, 2, 3],
-               [4, 0, 6],
-               [7, 5, 8]]
+# Example run
+start = [1, 2, 3,
+         4, 0, 5,
+         6, 7, 8]
 
-print("Initial State:")
-for row in start_state:
-    print(row)
+goal = [1, 2, 3,
+        4, 5, 6,
+        7, 8, 0]
 
-solution = solve_puzzle(start_state)
+solution = bfs(start, goal)
+
+
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
 
 if solution:
-    print("\nSolution Found in", len(solution), "moves!")
-    step = 1
-    for state in solution:
-        print(f"\nStep {step}:")
-        for row in state:
-            print(row)
-        step += 1
+    print("Steps to solve 8-Puzzle:")
+    for step in solution:
+        for i in range(0, 9, 3):
+            print(step[i:i+3])
+        print()
 else:
-    print("No solution exists!")
+    print("No solution found.")
