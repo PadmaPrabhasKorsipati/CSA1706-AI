@@ -68,6 +68,10 @@ def a_star_8puzzle(start, goal):
     return None
 
 # 🔹 User Input
+
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
+
 print("Enter the start state of 8-puzzle (use 0 for blank):")
 start = []
 for i in range(3):
