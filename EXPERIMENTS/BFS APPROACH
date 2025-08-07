@@ -16,6 +16,9 @@ def bfs(graph, start):
 
 # 🔹 Taking Graph Input
 graph = {}
+
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
 n = int(input("Enter number of nodes: "))
 
 for i in range(n):
