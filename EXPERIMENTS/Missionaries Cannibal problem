@@ -46,6 +46,9 @@ def bfs(start, goal, total_M, total_C):
     return None, None
 
 # 🔹 User Input
+
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
 M = int(input("Enter number of Missionaries: "))
 C = int(input("Enter number of Cannibals: "))
 
