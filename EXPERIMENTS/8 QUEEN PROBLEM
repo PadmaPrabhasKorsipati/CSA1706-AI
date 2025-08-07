@@ -1,12 +1,12 @@
-N = 8  # Chessboard size
+# 8-Queen Problem using Backtracking
 
-# Function to print the chessboard
+N = 8  # Chessboard size (8x8)
+
 def print_solution(board):
     for row in board:
         print(" ".join("Q" if col else "." for col in row))
     print()
 
-# Check if placing a queen at board[row][col] is safe
 def is_safe(board, row, col):
     # Check column
     for i in range(row):
@@ -14,25 +14,18 @@ def is_safe(board, row, col):
             return False
 
     # Check upper-left diagonal
-    i, j = row, col
-    while i >= 0 and j >= 0:
+    for i, j in zip(range(row-1, -1, -1), range(col-1, -1, -1)):
         if board[i][j]:
             return False
-        i -= 1
-        j -= 1
 
     # Check upper-right diagonal
-    i, j = row, col
-    while i >= 0 and j < N:
+    for i, j in zip(range(row-1, -1, -1), range(col+1, N)):
         if board[i][j]:
             return False
-        i -= 1
-        j += 1
 
     return True
 
-# Solve N-Queens using backtracking
-def solve_nqueens(board, row):
+def solve(board, row=0):
     if row == N:
         print_solution(board)
         return True
@@ -41,12 +34,13 @@ def solve_nqueens(board, row):
     for col in range(N):
         if is_safe(board, row, col):
             board[row][col] = 1
-            res = solve_nqueens(board, row + 1) or res
-            board[row][col] = 0  # backtrack
+            res = solve(board, row + 1) or res
+            board[row][col] = 0  # Backtrack
     return res
 
-# Main program
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
+# Driver code
 board = [[0 for _ in range(N)] for _ in range(N)]
-
-if not solve_nqueens(board, 0):
+if not solve(board):
     print("No solution exists")
