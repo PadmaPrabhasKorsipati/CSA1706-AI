@@ -1,0 +1,51 @@
+# Vacuum Cleaner Problem - 2x2 Grid with User Input
+
+def vacuum_cleaner(room, start=(0, 0)):
+    n = len(room)
+    m = len(room[0])
+    x, y = start  # starting position
+    moves = []
+
+    # Helper function to check if room is clean
+    def is_clean():
+        return all(room[i][j] == 0 for i in range(n) for j in range(m))
+
+    while not is_clean():
+        if room[x][y] == 1:
+            room[x][y] = 0
+            moves.append(f"Cleaned cell ({x}, {y})")
+
+        # Move in row-major order
+        if y < m - 1:
+            y += 1
+            moves.append(f"Moved RIGHT to ({x}, {y})")
+        elif x < n - 1:
+            x += 1
+            y = 0
+            moves.append(f"Moved DOWN to ({x}, {y})")
+        else:
+            x, y = 0, 0
+            moves.append("Restarted from top-left (0, 0)")
+
+    moves.append("All cells are clean!")
+    return moves
+
+# 🔹 Taking User Input
+
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
+print("Enter 2x2 Room State (1 = Dirty, 0 = Clean):")
+room = []
+for i in range(2):
+    row = list(map(int, input(f"Enter row {i+1} (two numbers with space): ").split()))
+    room.append(row)
+
+print("\nInitial Room State:")
+for r in room:
+    print(r)
+
+steps = vacuum_cleaner(room)
+
+print("\nSteps taken by Vacuum Cleaner:")
+for step in steps:
+    print(step)
