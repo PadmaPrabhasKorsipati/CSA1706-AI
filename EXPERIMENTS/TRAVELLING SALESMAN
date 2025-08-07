@@ -29,6 +29,10 @@ def travelling_salesman(distance_matrix, start):
 
 
 # 🔹 User Input
+
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
+
 n = int(input("Enter number of cities: "))
 distance_matrix = []
 
