@@ -36,5 +36,7 @@ def solve_crypt_arithmetic(puzzle):
     print("No solution found.")
 
 
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
 puzzle = input("Enter a crypt-arithmetic puzzle (e.g., SEND + MORE = MONEY): ").replace(" ", "")
 solve_crypt_arithmetic(puzzle)
