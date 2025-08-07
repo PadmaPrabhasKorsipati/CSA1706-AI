@@ -1,59 +1,53 @@
 from collections import deque
 
-# Function to solve Water Jug Problem
-def water_jug_bfs(capacity1, capacity2, target):
+def water_jug_bfs(x, y, target):
     visited = set()
-    queue = deque([(0, 0)])  # start with both jugs empty
+    queue = deque([(0, 0)])  # (jug1, jug2)
 
     while queue:
-        jug1, jug2 = queue.popleft()
-        
-        # If target is reached
-        if jug1 == target or jug2 == target:
-            print("Solution found:")
-            print(jug1, jug2)
-            return True
-        
-        # If already visited, skip
-        if (jug1, jug2) in visited:
+        a, b = queue.popleft()
+
+        if (a, b) in visited:
             continue
-        visited.add((jug1, jug2))
-        
-        print("State:", jug1, jug2)
-        
-        # All possible moves
-        possible_states = set()
-        
-        # 1. Fill Jug1
-        possible_states.add((capacity1, jug2))
-        
-        # 2. Fill Jug2
-        possible_states.add((jug1, capacity2))
-        
-        # 3. Empty Jug1
-        possible_states.add((0, jug2))
-        
-        # 4. Empty Jug2
-        possible_states.add((jug1, 0))
-        
-        # 5. Pour Jug1 → Jug2
-        pour = min(jug1, capacity2 - jug2)
-        possible_states.add((jug1 - pour, jug2 + pour))
-        
-        # 6. Pour Jug2 → Jug1
-        pour = min(jug2, capacity1 - jug1)
-        possible_states.add((jug1 + pour, jug2 - pour))
-        
-        for state in possible_states:
+        visited.add((a, b))
+
+        print(f"Jug1: {a} | Jug2: {b}")
+
+        # Check if we reached the target
+        if a == target or b == target:
+            print("\nReached the target!")
+            return True
+
+        # Possible states
+        states = set()
+
+        # Fill Jug1
+        states.add((x, b))
+        # Fill Jug2
+        states.add((a, y))
+        # Empty Jug1
+        states.add((0, b))
+        # Empty Jug2
+        states.add((a, 0))
+        # Pour Jug1 -> Jug2
+        pour = min(a, y - b)
+        states.add((a - pour, b + pour))
+        # Pour Jug2 -> Jug1
+        pour = min(b, x - a)
+        states.add((a + pour, b - pour))
+
+        for state in states:
             if state not in visited:
                 queue.append(state)
 
-    print("No solution possible")
+    print("No solution possible.")
     return False
 
-# Main Program
-cap1 = int(input("Enter capacity of Jug1: "))
-cap2 = int(input("Enter capacity of Jug2: "))
-target = int(input("Enter target amount: "))
+# Example run
+X = 4  # Capacity of Jug1
+Y = 3  # Capacity of Jug2
+Target = 2
 
-water_jug_bfs(cap1, cap2, target)
+Name=input("Enter Student Name:")
+RegNo=int(input("Enter Reg No:"))
+water_jug_bfs(X, Y, Target)
