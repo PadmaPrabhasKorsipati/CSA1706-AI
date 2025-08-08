@@ -1,0 +1,10 @@
+% 🔹 Facts: diet(Disease, RecommendedDiet)
+diet(diabetes, 'High fiber vegetables, whole grains, lean proteins, avoid sugar').
+diet(hypertension, 'Low sodium diet, fresh fruits, vegetables, avoid processed food').
+diet(obesity, 'Low calorie diet, more vegetables, lean protein, avoid junk food').
+diet(anemia, 'Iron-rich foods like spinach, beans, meat, avoid tea/coffee').
+diet(heart_disease, 'Low fat diet, whole grains, fish, avoid fried food').
+
+% 🔹 Rule: suggest_diet/2
+suggest_diet(Disease, Diet) :-
+    diet(Disease, Diet).
