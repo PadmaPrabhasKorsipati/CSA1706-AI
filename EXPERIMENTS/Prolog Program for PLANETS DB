@@ -1,0 +1,19 @@
+% 🔹 planet(Name, DistanceFromSunInMillionKm, Moons)
+planet(mercury, 57.9, 0).
+planet(venus, 108.2, 0).
+planet(earth, 149.6, 1).
+planet(mars, 227.9, 2).
+planet(jupiter, 778.3, 79).
+planet(saturn, 1427.0, 83).
+planet(uranus, 2871.0, 27).
+planet(neptune, 4497.1, 14).
+
+% 🔹 Rule: find planets with more than N moons
+planets_with_more_moons(N, Planet) :-
+    planet(Planet, _, Moons),
+    Moons > N.
+
+% 🔹 Rule: find planets within certain distance from sun
+planets_within_distance(D, Planet) :-
+    planet(Planet, Distance, _),
+    Distance =< D.
