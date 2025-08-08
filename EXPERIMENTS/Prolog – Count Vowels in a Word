@@ -1,0 +1,19 @@
+% Define vowels
+vowel(a). vowel(e). vowel(i). vowel(o). vowel(u).
+
+% Count vowels in a list of characters
+count_vowels([], 0).
+
+count_vowels([H|T], Count) :-
+    vowel(H),                      % If head is vowel
+    count_vowels(T, RestCount),
+    Count is RestCount + 1.
+
+count_vowels([H|T], Count) :-
+    \+ vowel(H),                   % If head is not vowel
+    count_vowels(T, Count).
+
+% Helper: count vowels in an atom (word)
+vowel_count_in_word(Word, Count) :-
+    atom_chars(Word, CharList),
+    count_vowels(CharList, Count).
