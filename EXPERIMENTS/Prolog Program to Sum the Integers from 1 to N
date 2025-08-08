@@ -1,0 +1,10 @@
+% 🔹 Base case: sum of 0 is 0
+sum(0, 0).
+
+% 🔹 Recursive case: sum(N) = N + sum(N-1)
+sum(N, Result) :-
+    N > 0,
+    N1 is N - 1,
+    sum(N1, Partial),
+    Result is Partial + N.
+
