@@ -1,0 +1,25 @@
+% 🔹 student(Name, SubjectCode)
+student(ravi, cs101).
+student(sita, cs102).
+student(rahul, cs101).
+student(anjali, cs103).
+
+% 🔹 teacher(Name, SubjectCode)
+teacher(mohan, cs101).
+teacher(sunita, cs102).
+teacher(rajesh, cs103).
+
+% 🔹 subject(SubjectCode, SubjectName)
+subject(cs101, 'Artificial Intelligence').
+subject(cs102, 'Data Structures').
+subject(cs103, 'Database Management').
+
+% 🔹 Rule: find teacher for a student
+teacher_for_student(Student, Teacher) :-
+    student(Student, Code),
+    teacher(Teacher, Code).
+
+% 🔹 Rule: find subject name for a student
+subject_for_student(Student, SubjectName) :-
+    student(Student, Code),
+    subject(Code, SubjectName).
