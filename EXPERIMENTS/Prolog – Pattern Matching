@@ -1,0 +1,12 @@
+% Match a pattern in a list
+
+% If both pattern and list are empty → match
+match([], []).
+
+% If pattern matches the start of the list
+match([H|TP], [H|TL]) :-
+    match(TP, TL).
+
+% If pattern is smaller, keep moving in the list
+match(Pattern, [_|TL]) :-
+    match(Pattern, TL).
