@@ -1,0 +1,23 @@
+% 🔹 Facts: parent(Parent, Child)
+parent(ram, arjun).
+parent(seeta, arjun).
+parent(ram, priya).
+parent(seeta, priya).
+parent(arjun, kavya).
+parent(anjali, kavya).
+
+% 🔹 Gender facts
+male(ram).
+male(arjun).
+female(seeta).
+female(priya).
+female(anjali).
+female(kavya).
+
+% 🔹 Rules
+father(F, C) :- parent(F, C), male(F).
+mother(M, C) :- parent(M, C), female(M).
+
+grandparent(GP, GC) :- parent(GP, P), parent(P, GC).
+
+sibling(X, Y) :- parent(P, X), parent(P, Y), X \= Y.
