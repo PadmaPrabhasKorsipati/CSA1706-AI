@@ -1,0 +1,17 @@
+% 🔹 Facts
+bird(sparrow).
+bird(eagle).
+bird(penguin).
+bird(ostrich).
+bird(parrot).
+
+% 🔹 Birds that cannot fly
+cannot_fly(penguin).
+cannot_fly(ostrich).
+
+% 🔹 Rule: can_fly/1
+can_fly(Bird) :-
+    bird(Bird),
+    \+ cannot_fly(Bird).
+
+% 🔹 Rule: cannot_fly/1 is already defined by facts
