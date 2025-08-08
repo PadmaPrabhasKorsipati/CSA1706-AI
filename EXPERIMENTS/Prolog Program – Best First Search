@@ -1,0 +1,44 @@
+% 🔹 Facts: heuristic(Node, HeuristicValue)
+heuristic(a, 10).
+heuristic(b, 8).
+heuristic(c, 5).
+heuristic(d, 7).
+heuristic(e, 3).
+heuristic(f, 6).
+heuristic(g, 0).   % Goal node
+
+% 🔹 Graph connections
+edge(a, b, 4).
+edge(a, c, 3).
+edge(b, d, 5).
+edge(b, e, 12).
+edge(c, f, 8).
+edge(d, g, 6).
+edge(e, g, 7).
+edge(f, g, 9).
+
+% 🔹 Best First Search
+best_first_search(Start, Goal, Path) :-
+    bfs([[Start]], Goal, RevPath),
+    reverse(RevPath, Path).
+
+% BFS helper
+bfs([[Goal|Rest]|_], Goal, [Goal|Rest]).
+bfs([Path|Paths], Goal, FinalPath) :-
+    Path = [Current|_],
+    findall([Next,Current|Path],
+        (edge(Current, Next, _), \+ member(Next, Path)),
+        NewPaths),
+    append(Paths, NewPaths, UpdatedPaths),
+    sort_paths(UpdatedPaths, SortedPaths),
+    bfs(SortedPaths, Goal, FinalPath).
+
+% Sort paths based on heuristic
+sort_paths(Paths, Sorted) :-
+    map_list_to_pairs(path_cost, Paths, Pairs),
+    keysort(Pairs, SortedPairs),
+    pairs_values(SortedPairs, Sorted).
+
+% Get heuristic cost of first node in path
+path_cost([Node|_], Cost) :-
+    heuristic(Node, Cost).
