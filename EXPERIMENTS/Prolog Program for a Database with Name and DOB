@@ -1,0 +1,9 @@
+% 🔹 Student Name and Date of Birth Database
+dob(john, '12-05-2001').
+dob(sita, '30-08-2002').
+dob(ram, '15-01-2003').
+dob(anjali, '22-12-2001').
+
+% 🔹 Rule to get DOB by Name
+get_dob(Name, Date) :-
+    dob(Name, Date).
