@@ -1,0 +1,20 @@
+% Facts
+fact(sunny).
+fact(warm).
+fact(weekend).
+
+% Rules
+rule(go_play, [sunny, warm, weekend]).
+rule(stay_home, [rainy]).
+rule(watch_movie, [weekend, cold]).
+
+% Check if all conditions are facts
+all_true([]).
+all_true([Cond|Rest]) :-
+    fact(Cond),
+    all_true(Rest).
+
+% Forward chaining inference
+forward_chaining(Action) :-
+    rule(Action, Conditions),
+    all_true(Conditions).
