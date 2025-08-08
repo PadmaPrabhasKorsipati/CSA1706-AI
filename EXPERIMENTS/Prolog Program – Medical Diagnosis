@@ -1,0 +1,21 @@
+% Facts
+symptom(flu, fever).
+symptom(flu, cough).
+symptom(flu, sore_throat).
+
+symptom(cold, runny_nose).
+symptom(cold, cough).
+symptom(cold, sneezing).
+
+symptom(malaria, fever).
+symptom(malaria, chills).
+symptom(malaria, sweating).
+
+symptom(typhoid, fever).
+symptom(typhoid, abdominal_pain).
+symptom(typhoid, headache).
+
+% Rule: Illness matches if all given signs are in the illness's symptom list
+diagnose(Illness, GivenSigns) :-
+    findall(Sign, symptom(Illness, Sign), IllnessSigns),
+    forall(member(GS, GivenSigns), member(GS, IllnessSigns)).
