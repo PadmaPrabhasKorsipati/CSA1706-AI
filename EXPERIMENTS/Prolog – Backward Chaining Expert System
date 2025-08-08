@@ -1,0 +1,23 @@
+% Facts
+fact(sunny).
+fact(warm).
+fact(weekend).
+
+% Rules
+rule(go_play, [sunny, warm, weekend]).
+rule(stay_home, [rainy]).
+rule(watch_movie, [weekend, cold]).
+
+% Backward chaining predicate
+prove(Goal) :-
+    fact(Goal).  % If Goal is a fact, succeed
+
+prove(Goal) :-
+    rule(Goal, Conditions),    % If there is a rule for Goal
+    prove_all(Conditions).     % Prove all its conditions
+
+% Prove a list of goals
+prove_all([]).
+prove_all([H|T]) :-
+    prove(H),
+    prove_all(T).
